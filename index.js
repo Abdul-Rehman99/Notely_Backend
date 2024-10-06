@@ -8,6 +8,7 @@ mongoose.connect(process.env.DB_URI)
 
 import express from 'express'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 import authenticateJWT from './middlewares/auth.middelware.js'
 import {signup,login} from './controllers/user.controller.js'
 import { createTodo, getAllTodos, getAllTodosByCategory, updateTodo, deleteTodo } 
@@ -18,7 +19,7 @@ app.listen(process.env.PORT, () => console.log("server is running on PORT: 8080"
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
-
+app.use(cors({origin: process.env.FRONTEND_URL}))
 
 app.post('/api/signup', signup)
 app.post('/api/login', login)
