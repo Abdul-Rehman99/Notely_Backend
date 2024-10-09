@@ -29,9 +29,25 @@ export const createTodo = async (req, res) => {
     }
 }
 
+// export const getAllTodos = async (req, res) => {
+//   try {
+//     const todos = await Todo.find({ user: req.user.id }).sort({ isCompleted: 1, createdAt: -1 });
+//     res.json(todos);
+//   } 
+//   catch (error) {
+//     console.log(error.message);
+//     res.status(500).json({ message: 'Server error', error: error.message });
+//   }
+// }
+
 export const getAllTodos = async (req, res) => {
   try {
-    const todos = await Todo.find({ user: req.user.id }).sort({ createdAt: -1 });
+    const { isChecked } = req.query;
+    let filter = { user: req.user.id };
+    if (isChecked === 'true') {
+      filter.isCompleted = true;
+    }
+    const todos = await Todo.find(filter).sort({ isCompleted: 1, createdAt: -1 });
     res.json(todos);
   } 
   catch (error) {
@@ -39,6 +55,7 @@ export const getAllTodos = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 }
+
 
 export const updateTodo =  async (req, res) => {
   try {
