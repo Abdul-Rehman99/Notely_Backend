@@ -7,8 +7,7 @@ mongoose.connect(process.env.DB_URI)
 .catch((error) => console.log("Database Error: ",error))
 
 const allowedOrigins = [
-    process.env.FRONTEND_URL,
-    'https://67039ac358a34962b6cb7904--statuesque-tarsier-c7c1c4.netlify.app'
+    process.env.FRONTEND_URL
 ]
 const corsOptions = {
     origin: (origin, callback) => {
